@@ -1,6 +1,7 @@
 {
   "classification_rules": [
     {"domain": "financial", "indicators": ["credit card", "bank account"]},
-    {"domain": "healthcare", "indicators": ["medical insurance"]}
+    {"domain": "healthcare", "indicators": ["medical insurance"]},
+    {"domain": "hightech", "indicators": ["account executive"]}
   ]
 }

@@ -1,10 +1,13 @@
 package com.mcas.textclassifer;
 
+import com.mcas.textclassifer.classifier.Classifier;
+import com.mcas.textclassifer.configurations.data.ClassificationRules;
 import com.mcas.textclassifer.configurations.loaders.ClassificationRulesLoader;
 import com.mcas.textclassifer.configurations.loaders.JsonClassificationRulesLoader;
-import com.mcas.textclassifer.tokenizers.*;
+import com.mcas.textclassifer.tokenizers.TokenRange;
+import com.mcas.textclassifer.tokenizers.TokenizerConfiguration;
+import com.mcas.textclassifer.tokenizers.TokenizerStreamer;
 import lombok.Cleanup;
-import lombok.val;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,21 +20,23 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class App {
+    static TokenizerConfiguration tokenConfig =
+            TokenizerConfiguration.builder()
+                    .lowerCaseMode(true)
+                    .wordRange(new TokenRange('a', 'z'))
+                    .build();
+
+
     public static void main(String[] args) throws IOException, URISyntaxException {
-        loadConfiguration();
-        streamTokens();
+        Classifier classifier = new Classifier(loadConfiguration());
+        //todo: walk on all files
+        classifyFile(classifier, getPath("input_example.txt"));
     }
 
-    private static void streamTokens() throws IOException, URISyntaxException {
-        @Cleanup BufferedReader br = Files.newBufferedReader(getPath("input_example.txt"), StandardCharsets.UTF_8);
-        val tokenConfig =
-                TokenizerConfiguration.builder()
-                        .lowerCaseMode(true)
-                        .wordRange(new TokenRange('a', 'z'))
-                        .build();
-        new TokenizerStreamer(br,tokenConfig).stream()
-                .filter(t->t.getType().equals(TokenType.WORD))
-                .map(Token::getValue)
+    private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
+        @Cleanup BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8);
+        classifier
+                .classifyTokens(new TokenizerStreamer(br, tokenConfig).stream())
                 .forEach(System.out::println);
     }
 
@@ -42,15 +47,11 @@ public class App {
         }
         return new File(configURL.toURI()).toPath();
     }
-    private static void loadConfiguration() throws URISyntaxException, IOException {
+
+    private static ClassificationRules loadConfiguration() throws URISyntaxException, IOException {
         Path path = getPath("config.json");
         @Cleanup Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
         ClassificationRulesLoader cl = new JsonClassificationRulesLoader();
-        val cr = cl.load(reader);
-        cr.getRules().forEach(rule -> {
-            //todo: add rule to a trie
-        });
-        System.out.println(cr);
-
+        return cl.load(reader);
     }
 }
