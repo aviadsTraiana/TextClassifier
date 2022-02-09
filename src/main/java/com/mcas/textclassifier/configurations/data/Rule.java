@@ -1,4 +1,4 @@
-package com.mcas.textclassifer.configurations.data;
+package com.mcas.textclassifier.configurations.data;
 
 import lombok.Value;
 

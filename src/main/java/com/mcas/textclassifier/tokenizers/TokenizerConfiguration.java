@@ -1,6 +1,6 @@
-package com.mcas.textclassifer.tokenizers;
+package com.mcas.textclassifier.tokenizers;
 
-import com.mcas.textclassifer.tokenizers.data.TokenRange;
+import com.mcas.textclassifier.tokenizers.data.TokenRange;
 import lombok.Builder;
 
 @Builder

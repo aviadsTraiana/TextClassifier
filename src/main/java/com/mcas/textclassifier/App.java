@@ -1,12 +1,13 @@
-package com.mcas.textclassifer;
+package com.mcas.textclassifier;
 
-import com.mcas.textclassifer.classifier.Classifier;
-import com.mcas.textclassifer.configurations.data.ClassificationRules;
-import com.mcas.textclassifer.configurations.loaders.ClassificationRulesLoader;
-import com.mcas.textclassifer.configurations.loaders.JsonClassificationRulesLoader;
-import com.mcas.textclassifer.tokenizers.data.TokenRange;
-import com.mcas.textclassifer.tokenizers.TokenizerConfiguration;
-import com.mcas.textclassifer.tokenizers.TokenizerStreamer;
+import com.mcas.textclassifier.classifier.Classifier;
+import com.mcas.textclassifier.configurations.data.ClassificationRules;
+import com.mcas.textclassifier.configurations.loaders.ClassificationRulesLoader;
+import com.mcas.textclassifier.configurations.loaders.JsonClassificationRulesLoader;
+import com.mcas.textclassifier.tokenizers.TokenizerConfiguration;
+import com.mcas.textclassifier.tokenizers.TokenizerStreamer;
+import com.mcas.textclassifier.tokenizers.data.TokenRange;
+import com.mcas.textclassifier.view.CommandLineView;
 import lombok.Cleanup;
 import lombok.val;
 
@@ -18,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static com.mcas.textclassifer.utils.PathHelper.getPath;
+import static com.mcas.textclassifier.utils.PathHelper.getResoucePath;
 
 public class App {
     private static final TokenizerConfiguration tokenConfig =
@@ -28,12 +29,12 @@ public class App {
                     .wordRange(new TokenRange('a', 'z'))
                     .build();
 
-
     public static void main(String[] args) throws IOException, URISyntaxException {
-        Classifier classifier = new Classifier(loadConfiguration());
+        val cmd = new CommandLineView(args);
+        Classifier classifier = new Classifier(loadConfiguration(getResoucePath(cmd.getConfigPath())));
         //todo: walk on all files
         //classifyFile(classifier, getPath("input_example.txt"));
-        classifyFile(classifier, getPath("numbers.txt"));
+        classifyFile(classifier, getResoucePath(cmd.getScanPath()));
     }
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
@@ -42,8 +43,7 @@ public class App {
         classifier.classifyTokens(tokensStream).forEach(System.out::println);
     }
 
-    private static ClassificationRules loadConfiguration() throws URISyntaxException, IOException {
-        Path path = getPath("config.json");
+    private static ClassificationRules loadConfiguration(Path path) throws IOException {
         @Cleanup Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
         ClassificationRulesLoader cl = new JsonClassificationRulesLoader();
         return cl.load(reader);

@@ -1,11 +1,11 @@
-package com.mcas.textclassifer.classifier;
+package com.mcas.textclassifier.classifier;
 
-import com.mcas.textclassifer.classifier.ds.Tag;
-import com.mcas.textclassifer.classifier.ds.WordTrie;
-import com.mcas.textclassifer.configurations.data.ClassificationRules;
-import com.mcas.textclassifer.configurations.data.Rule;
-import com.mcas.textclassifer.tokenizers.data.Token;
-import com.mcas.textclassifer.tokenizers.data.TokenType;
+import com.mcas.textclassifier.classifier.ds.Tag;
+import com.mcas.textclassifier.classifier.ds.WordTrie;
+import com.mcas.textclassifier.configurations.data.ClassificationRules;
+import com.mcas.textclassifier.configurations.data.Rule;
+import com.mcas.textclassifier.tokenizers.data.Token;
+import com.mcas.textclassifier.tokenizers.data.TokenType;
 import lombok.val;
 
 import java.util.HashSet;

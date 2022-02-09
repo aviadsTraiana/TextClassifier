@@ -1,4 +1,4 @@
-package com.mcas.textclassifer.classifier.ds;
+package com.mcas.textclassifier.classifier.ds;
 
 import lombok.Value;
 

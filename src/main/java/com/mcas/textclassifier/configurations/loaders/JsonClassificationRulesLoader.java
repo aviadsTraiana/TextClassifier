@@ -1,12 +1,12 @@
-package com.mcas.textclassifer.configurations.loaders;
+package com.mcas.textclassifier.configurations.loaders;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.mcas.textclassifer.configurations.data.ClassificationRules;
-import com.mcas.textclassifer.configurations.data.Rule;
+import com.mcas.textclassifier.configurations.data.ClassificationRules;
+import com.mcas.textclassifier.configurations.data.Rule;
 
 import java.io.Reader;
 import java.util.List;
