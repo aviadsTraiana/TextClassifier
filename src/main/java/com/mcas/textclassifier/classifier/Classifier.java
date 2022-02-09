@@ -53,7 +53,7 @@ public class Classifier {
                             window.addLast(token);
                         }
                         if(n.isTagged()){
-                            System.out.println("adding tag for "+token);
+                            //todo: add logs
                             result.addAll(n.getTags());
                         }
                     }else{
@@ -81,7 +81,7 @@ public class Classifier {
             if (node.isPresent()) {
                 val n = node.get();
                 if(n.isTagged()){
-                    System.out.println("adding tag for "+token);
+                    //todo: add logs
                     result.addAll(n.getTags());
                 }
             }else{
