@@ -11,7 +11,6 @@ import com.mcas.textclassifier.view.CommandLineView;
 import lombok.Cleanup;
 import lombok.val;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URISyntaxException;
@@ -31,15 +30,16 @@ public class App {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         val cmd = new CommandLineView(args);
-        Classifier classifier = new Classifier(loadConfiguration(getResoucePath(cmd.getConfigPath())));
+        val config = loadConfiguration(getResoucePath(cmd.getConfigPath()));
+        Classifier classifier = new Classifier(config);
         //todo: walk on all files
         //classifyFile(classifier, getPath("input_example.txt"));
         classifyFile(classifier, getResoucePath(cmd.getScanPath()));
     }
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
-        @Cleanup BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8);
-        val tokensStream = new TokenizerStreamer(br, tokenConfig).stream();
+        @Cleanup Reader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8);
+        val tokensStream = new TokenizerStreamer(reader, tokenConfig).stream();
         classifier.classifyTokens(tokensStream).forEach(System.out::println);
     }
 

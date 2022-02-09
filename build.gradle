@@ -1,5 +1,6 @@
 plugins {
-    id 'java'
+    id "java"
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
 group 'org.example'
@@ -23,6 +24,24 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
+
+shadowJar {
+    archiveBaseName.set('textclassifier')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    manifest {
+        attributes(
+                'Build-Time': new Date(),
+                'Implementation-Title': rootProject.name,
+                'Implementation-Version': rootProject.version,
+                'Implementation-Vendor': "Microsoft",
+                'Main-Class': "com.mcas.textclassifier.App"
+        )
+    }
+}
+
+
+tasks.build.dependsOn tasks.shadowJar
 
 test {
     useJUnitPlatform()
