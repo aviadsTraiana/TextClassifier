@@ -1,5 +1,7 @@
 package com.mcas.textclassifer.tokenizers;
 
+import lombok.val;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
@@ -54,7 +56,10 @@ public class TokenizerStreamer {
                 if (hasNext()) {
                     Token token;
                     if (streamTokenizer.ttype == StreamTokenizer.TT_NUMBER) {
-                        token = new Token(TokenType.NUMBER, String.valueOf(streamTokenizer.nval));
+                        val number = streamTokenizer.nval;
+                        //potential bug: in text there is x.0 the output will be x
+                        val string = number == Math.floor(number) ? String.valueOf((int)number) : String.valueOf(number);
+                        token = new Token(TokenType.NUMBER, string);
                     } else if (streamTokenizer.ttype == StreamTokenizer.TT_WORD
                             || streamTokenizer.ttype == QUOTE_CHARACTER
                             || streamTokenizer.ttype == DOUBLE_QUOTE_CHARACTER) {

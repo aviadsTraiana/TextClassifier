@@ -2,6 +2,10 @@
   "classification_rules": [
     {"domain": "financial", "indicators": ["credit card", "bank account"]},
     {"domain": "healthcare", "indicators": ["medical insurance"]},
-    {"domain": "hightech", "indicators": ["account executive"]}
+    {"domain": "hightech", "indicators": ["account executive"]},
+    {"domain": "25", "indicators": ["2 5"]},
+    {"domain": "1256", "indicators": ["1 2 5 6"]},
+    {"domain": "34", "indicators": ["3 4"]},
+    {"domain": "12", "indicators": ["1 2"]}
   ]
 }

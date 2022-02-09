@@ -30,7 +30,8 @@ public class App {
     public static void main(String[] args) throws IOException, URISyntaxException {
         Classifier classifier = new Classifier(loadConfiguration());
         //todo: walk on all files
-        classifyFile(classifier, getPath("input_example.txt"));
+        //classifyFile(classifier, getPath("input_example.txt"));
+        classifyFile(classifier, getPath("numbers.txt"));
     }
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
