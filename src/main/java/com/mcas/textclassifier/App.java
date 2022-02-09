@@ -13,12 +13,10 @@ import lombok.val;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static com.mcas.textclassifier.utils.PathHelper.getResoucePath;
+import java.nio.file.Paths;
 
 public class App {
     private static final TokenizerConfiguration tokenConfig =
@@ -28,13 +26,20 @@ public class App {
                     .wordRange(new TokenRange('a', 'z'))
                     .build();
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        val cmd = new CommandLineView(args);
-        val config = loadConfiguration(getResoucePath(cmd.getConfigPath()));
-        Classifier classifier = new Classifier(config);
-        //todo: walk on all files
-        //classifyFile(classifier, getPath("input_example.txt"));
-        classifyFile(classifier, getResoucePath(cmd.getScanPath()));
+    public static void main(String[] args) {
+        try {
+            val cmd = new CommandLineView(args);
+            val config = loadConfiguration(Paths.get(cmd.getConfigPath()));
+            Classifier classifier = new Classifier(config);
+            //todo: walk on all files
+            //classifyFile(classifier, getPath("input_example.txt"));
+            classifyFile(classifier, Paths.get(cmd.getScanPath()));
+        }catch (IllegalArgumentException e){
+            System.err.println(e.getMessage());
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
