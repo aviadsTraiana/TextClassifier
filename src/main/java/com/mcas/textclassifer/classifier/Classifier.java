@@ -7,7 +7,6 @@ import com.mcas.textclassifer.configurations.data.Rule;
 import com.mcas.textclassifer.tokenizers.Token;
 import com.mcas.textclassifer.tokenizers.TokenType;
 import lombok.val;
-import lombok.var;
 
 import java.util.HashSet;
 import java.util.LinkedList;
