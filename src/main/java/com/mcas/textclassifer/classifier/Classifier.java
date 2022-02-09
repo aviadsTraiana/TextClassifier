@@ -4,8 +4,8 @@ import com.mcas.textclassifer.classifier.ds.Tag;
 import com.mcas.textclassifer.classifier.ds.WordTrie;
 import com.mcas.textclassifer.configurations.data.ClassificationRules;
 import com.mcas.textclassifer.configurations.data.Rule;
-import com.mcas.textclassifer.tokenizers.Token;
-import com.mcas.textclassifer.tokenizers.TokenType;
+import com.mcas.textclassifer.tokenizers.data.Token;
+import com.mcas.textclassifer.tokenizers.data.TokenType;
 import lombok.val;
 
 import java.util.HashSet;

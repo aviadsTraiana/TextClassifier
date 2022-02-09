@@ -4,7 +4,7 @@ import com.mcas.textclassifer.classifier.Classifier;
 import com.mcas.textclassifer.configurations.data.ClassificationRules;
 import com.mcas.textclassifer.configurations.loaders.ClassificationRulesLoader;
 import com.mcas.textclassifer.configurations.loaders.JsonClassificationRulesLoader;
-import com.mcas.textclassifer.tokenizers.TokenRange;
+import com.mcas.textclassifer.tokenizers.data.TokenRange;
 import com.mcas.textclassifer.tokenizers.TokenizerConfiguration;
 import com.mcas.textclassifer.tokenizers.TokenizerStreamer;
 import lombok.Cleanup;
