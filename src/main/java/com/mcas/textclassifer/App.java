@@ -8,20 +8,22 @@ import com.mcas.textclassifer.tokenizers.TokenRange;
 import com.mcas.textclassifer.tokenizers.TokenizerConfiguration;
 import com.mcas.textclassifer.tokenizers.TokenizerStreamer;
 import lombok.Cleanup;
+import lombok.val;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static com.mcas.textclassifer.utils.PathHelper.getPath;
+
 public class App {
-    static TokenizerConfiguration tokenConfig =
-            TokenizerConfiguration.builder()
+    private static final TokenizerConfiguration tokenConfig =
+            TokenizerConfiguration
+                    .builder()
                     .lowerCaseMode(true)
                     .wordRange(new TokenRange('a', 'z'))
                     .build();
@@ -36,17 +38,8 @@ public class App {
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
         @Cleanup BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8);
-        classifier
-                .classifyTokens(new TokenizerStreamer(br, tokenConfig).stream())
-                .forEach(System.out::println);
-    }
-
-    private static Path getPath(String filePath) throws URISyntaxException {
-        URL configURL = App.class.getClassLoader().getResource(filePath);
-        if (configURL == null) {
-            throw new IllegalArgumentException("file not found!");
-        }
-        return new File(configURL.toURI()).toPath();
+        val tokensStream = new TokenizerStreamer(br, tokenConfig).stream();
+        classifier.classifyTokens(tokensStream).forEach(System.out::println);
     }
 
     private static ClassificationRules loadConfiguration() throws URISyntaxException, IOException {
