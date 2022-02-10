@@ -15,6 +15,7 @@ import lombok.val;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
@@ -33,10 +34,15 @@ public class App {
         try {
             val cmd = new CommandLineView(args);
             val config = loadConfiguration(Paths.get(cmd.getConfigPath()));
-            Classifier classifier = new Classifier(config);
-            //todo: walk on all files
-            //classifyFile(classifier, getPath("input_example.txt"));
-            classifyFile(classifier, Paths.get(cmd.getScanPath()));
+            val classifier = new Classifier(config);
+            val files = Files.walk(Paths.get(cmd.getScanPath())).filter(Files::isRegularFile);
+            files.forEach(filePath ->{
+                try {
+                    classifyFile(classifier, filePath);
+                } catch (IOException e) {
+                    System.out.println("could not read file "+filePath+" skipping");
+                }
+            });
         }catch (IllegalArgumentException e){
             System.err.println(e.getMessage());
         }
