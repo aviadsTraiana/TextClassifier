@@ -24,7 +24,7 @@ for additonal help run
   ```
 
 ### Design overview
-![overall design](src/main/resources/design.png)
+![overall design](docs/design.png)
 
 few points about the design:
 
