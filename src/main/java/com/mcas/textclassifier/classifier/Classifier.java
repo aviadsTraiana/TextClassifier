@@ -5,14 +5,12 @@ import com.mcas.textclassifier.classifier.ds.WordTrie;
 import com.mcas.textclassifier.configurations.data.ClassificationRules;
 import com.mcas.textclassifier.configurations.data.Rule;
 import com.mcas.textclassifier.tokenizers.data.Token;
-import com.mcas.textclassifier.tokenizers.data.TokenType;
 import lombok.val;
 
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class Classifier {
@@ -42,9 +40,7 @@ public class Classifier {
         //window represent the tokens we read along the trie, as we walk the trie
         val window = new LinkedList<String>();
         HashSet<Tag> result = new HashSet<>();
-        tokens
-                .filter(getTokenPredicate())
-                .map(Token::getValue)
+        tokens.map(Token::getValue)
                 .forEach(token -> {
                     val node = trie.readNext(token);
                     if(node.isPresent()){
@@ -92,8 +88,6 @@ public class Classifier {
         if(!window.isEmpty()) walkOnWindow(window, result);
     }
 
-    protected Predicate<Token> getTokenPredicate() {
-        return t -> t.getType().equals(TokenType.WORD) || t.getType().equals(TokenType.NUMBER);
-    }
+
 
 }
