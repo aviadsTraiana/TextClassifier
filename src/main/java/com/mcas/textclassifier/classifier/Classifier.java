@@ -45,7 +45,7 @@ public class Classifier {
                     val node = trie.readNext(token);
                     if(node.isPresent()){
                         val n =node.get();
-                        if(!trie.isChildOfRoot()){ //we buffer in window words that may be used again
+                        if(!trie.isFirstWord()){ //we buffer in window words that may be used again
                             window.addLast(token);
                         }
                         if(n.isTagged()){

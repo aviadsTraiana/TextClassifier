@@ -51,11 +51,11 @@ class WordTrieTest {
     @Test
     void isChildOfRoot() {
         trie.readNext("bank");
-        assertTrue(trie.isChildOfRoot());
+        assertTrue(trie.isFirstWord(),()->"bank should be child of root");
         trie.readNext("account");
-        assertFalse(trie.isChildOfRoot());
+        assertFalse(trie.isFirstWord(),()->"account should not be the child of root");
         trie.reset();
-        assertFalse(trie.isChildOfRoot());
+        assertFalse(trie.isFirstWord(),()->"after restart we have not read yet , so we are not at first node");
 
     }
 

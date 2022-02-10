@@ -76,9 +76,9 @@ public class WordTrie {
             i++;
         }
     }
-    public boolean isChildOfRoot(){
+    public boolean isFirstWord(){
         //return current.parent==root;
-        return currentNode.get()==root;
+        return currentNode.get().parent==root;
     }
     public Optional<Node> readNext(String word){
        //return readFrom(this.current, word);
