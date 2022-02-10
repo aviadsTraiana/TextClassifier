@@ -1,5 +1,7 @@
 
   
+
+  
 # Text Classifeir  
   
 an implementation for the text classifier task which was given [here](https://github.com/Mcas-Interviews/TextClassifier_AviadShiber/issues/1)  
@@ -8,7 +10,9 @@ an implementation for the text classifier task which was given [here](https://gi
 to build the project run the following command from root project :  
   
   
- ./gradlew clean build  
+
+     ./gradlew clean build  
+
 the uber jar will be placed in `build/libs/textclassifier.jar`  
   
   
