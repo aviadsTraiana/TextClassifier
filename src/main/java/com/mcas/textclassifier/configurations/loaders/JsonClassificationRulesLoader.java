@@ -10,6 +10,8 @@ import com.mcas.textclassifier.configurations.data.Rule;
 
 import java.io.Reader;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class JsonClassificationRulesLoader implements ClassificationRulesLoader {
 
@@ -20,6 +22,7 @@ public class JsonClassificationRulesLoader implements ClassificationRulesLoader 
         JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
         JsonArray listOfRules = jsonObject.getAsJsonArray(CLASSIFICATION_RULES_JSON_NAME);
         Gson g = new Gson();
-        return new ClassificationRules(g.fromJson(listOfRules, new TypeToken<List<Rule>>() {}.getType()));
+        List<Rule> rules = g.fromJson(listOfRules, new TypeToken<List<Rule>>() {}.getType());
+        return new ClassificationRules(rules.stream().filter(Objects::nonNull).collect(Collectors.toList()));
     }
 }
