@@ -17,6 +17,7 @@ dependencies {
     implementation group: 'commons-cli', name: 'commons-cli', version: '1.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -45,4 +46,11 @@ tasks.build.dependsOn tasks.shadowJar
 
 test {
     useJUnitPlatform()
+    // Always run tests, even when nothing changed.
+    dependsOn 'cleanTest'
+
+    // Show test results.
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
