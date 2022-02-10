@@ -43,16 +43,17 @@ public class TextClassifierFilesReader implements Runnable {
     @SneakyThrows
     @Override
     public void run() {
-        Files.walk(this.scanPath)
+        @Cleanup val files = Files.walk(this.scanPath)
                 .filter(Files::isRegularFile)
-                .forEach(filePath -> {
-                    try {
-                        classifyFile(filePath);
-                    } catch (IOException e) {
-                        //todo: replace with logger
-                        System.err.println("could not read file " + filePath + " skipping");
-                    }
-                });
+                .parallel();
+        files.forEach(filePath -> {
+            try {
+                classifyFile(filePath);
+            } catch (IOException e) {
+                //todo: replace with logger
+                System.err.println("could not read file " + filePath + " skipping");
+            }
+        });
     }
 
     private void classifyFile(Path filePath) throws IOException {
