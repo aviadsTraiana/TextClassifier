@@ -1,4 +1,4 @@
-package com.mcas.textclassifier.tokenizers.data;
+package com.mcas.textclassifier.types;
 
 public enum TokenType {
     WORD,ORDINARY,NUMBER

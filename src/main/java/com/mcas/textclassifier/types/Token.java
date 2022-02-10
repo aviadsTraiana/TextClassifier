@@ -1,4 +1,4 @@
-package com.mcas.textclassifier.tokenizers.data;
+package com.mcas.textclassifier.types;
 
 import lombok.Value;
 

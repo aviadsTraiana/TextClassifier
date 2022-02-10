@@ -1,7 +1,7 @@
 package com.mcas.textclassifier.tokenizers;
 
-import com.mcas.textclassifier.tokenizers.data.Token;
-import com.mcas.textclassifier.tokenizers.data.TokenType;
+import com.mcas.textclassifier.types.Token;
+import com.mcas.textclassifier.types.TokenType;
 import lombok.val;
 
 import java.io.IOException;
