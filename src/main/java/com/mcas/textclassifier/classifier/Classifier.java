@@ -61,6 +61,7 @@ public class Classifier {
                         }
                     }
                 });
+        trie.reset();
         return result;
     }
 
