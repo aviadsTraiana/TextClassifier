@@ -15,11 +15,11 @@ import lombok.val;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.function.Predicate;
+
+import static com.mcas.textclassifier.utils.FileHelper.readFile;
 
 public class App {
     private static final TokenizerConfiguration tokenConfig =
@@ -46,20 +46,24 @@ public class App {
     }
 
     private static void classifyFile(Classifier classifier, Path filePath) throws IOException {
-        @Cleanup Reader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8);
+        @Cleanup Reader reader = readFile(filePath);
         val tokensStream =
-                new TokenizerStreamer(reader, tokenConfig).stream()
-                        .filter(getTokenPredicate());
-        classifier.classifyTokens(tokensStream).forEach(System.out::println);
+                new TokenizerStreamer(reader, tokenConfig)
+                        .stream()
+                        .filter(tokenFilterPredicates());
+        
+        classifier
+                .classifyTokens(tokensStream)
+                .forEach(System.out::println);
     }
 
     private static ClassificationRules loadConfiguration(Path path) throws IOException {
-        @Cleanup Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+        @Cleanup Reader reader = readFile(path);
         ClassificationRulesLoader cl = new JsonClassificationRulesLoader();
         return cl.load(reader);
     }
 
-    private static Predicate<Token> getTokenPredicate() {
+    private static Predicate<Token> tokenFilterPredicates() {
         return t -> t.getType().equals(TokenType.WORD) || t.getType().equals(TokenType.NUMBER);
     }
 }
