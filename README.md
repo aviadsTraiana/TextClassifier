@@ -10,7 +10,9 @@ to build the project run the following command from root project :
   
   
   
- ./gradlew clean build   
+
+     ./gradlew clean build   
+
 the uber jar will be placed in `build/libs/textclassifier.jar`  
   
   
@@ -18,10 +20,14 @@ the uber jar will be placed in `build/libs/textclassifier.jar`
 ### **Run**  
 command for running the java program:  
   
- java -jar build/libs/textclassifier.jar --config <path_to_json_configuration> --scan <path_to_file_or_directory>   
+
+     java -jar build/libs/textclassifier.jar --config <path_to_json_configuration> --scan <path_to_file>   
+
 for additonal help run  
   
- java -jar build/libs/textclassifier.jar --help  
+
+     java -jar build/libs/textclassifier.jar --help  
+
 ### Design overview  
 ![overall design](docs/design.png)  
   
