@@ -4,6 +4,12 @@ import lombok.Getter;
 
 import java.util.*;
 
+/**
+ * WordTrie is a kind of prefix tree, but of words instead of characters.
+ * it is only thread safe for read, not write.
+ * so you can do your preprocessing by adding all the words to it with `addWords` sequentially
+ * and then read from it in parallel with `readNext`.
+ */
 public class WordTrie {
     public static class Node{
         @Getter private final Node parent;
@@ -26,11 +32,14 @@ public class WordTrie {
     }
     private final Node root;
     private final Map<String,Tag> tags;
-    private Node current;
+    private final ThreadLocal<Node> currentNode;
+    //private Node current;
 
     public WordTrie() {
         this.root = new Node(null);
-        this.current = root;
+        //this.current = root;
+        currentNode=new ThreadLocal<>();
+        currentNode.set(root);
         this.tags = new Hashtable<>();
     }
 
@@ -68,20 +77,25 @@ public class WordTrie {
         }
     }
     public boolean isChildOfRoot(){
-        return current.parent==root;
+        //return current.parent==root;
+        return currentNode.get()==root;
     }
     public Optional<Node> readNext(String word){
-       return readFrom(this.current, word);
+       //return readFrom(this.current, word);
+       return readFrom(this.currentNode.get(), word);
     }
     public Optional<Node> readFrom(Node node, String word){
         if(node!=null) {
-            this.current = node.children.get(word);
-            return Optional.ofNullable(this.current);
+            //this.current = node.children.get(word);
+            this.currentNode.set(node.children.get(word));
+            //return Optional.ofNullable(this.current);
+            return Optional.ofNullable(this.currentNode.get());
         }
         return Optional.empty();
     }
 
     public void reset(){
-        this.current = root;
+        //this.current = root;
+        this.currentNode.set(root);
     }
 }
