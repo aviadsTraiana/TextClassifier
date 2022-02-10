@@ -24,8 +24,9 @@ import static com.mcas.textclassifier.utils.FileHelper.readFile;
 
 public class TextClassifierFilesReader implements Runnable {
 
-    final private Classifier classifier;
+    //final private Classifier classifier;
     final private Path scanPath;
+    final private ClassificationRules classificationRules;
 
     private static final TokenizerConfiguration tokenConfig =
             TokenizerConfiguration
@@ -35,9 +36,8 @@ public class TextClassifierFilesReader implements Runnable {
                     .build();
 
     public TextClassifierFilesReader(Path config, Path scan) throws IOException {
-        ClassificationRules classificationRules = loadConfiguration(config);
+        this.classificationRules = loadConfiguration(config);
         this.scanPath = scan;
-        this.classifier = new Classifier(classificationRules);
     }
 
     @SneakyThrows
@@ -62,7 +62,7 @@ public class TextClassifierFilesReader implements Runnable {
                         .stream()
                         .filter(tokenFilterPredicates());
 
-        this.classifier
+        new Classifier(classificationRules)
                 .classifyTokens(tokensStream)
                 .stream()
                 .map(Tag::getValue)
