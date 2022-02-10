@@ -14,9 +14,14 @@ the uber jar will be placed in `build/libs/textclassifier.jar`
 
 
 ### **Run**
-command for running the java program:  
-``` java -jar build/libs/textclassifier.jar --config <path_to_json_configuration> --scan <path_to_text_file> ```for additonal help run  
-``` java -jar build/libs/textclassifier.jar --help ```
+command for running the java program:
+
+    java -jar build/libs/textclassifier.jar --config <path_to_json_configuration> --scan <path_to_file_or_directory> 
+
+for additonal help run
+
+    java -jar build/libs/textclassifier.jar --help
+
 ### Design overview
 ![overall design](docs/design.png)
 
