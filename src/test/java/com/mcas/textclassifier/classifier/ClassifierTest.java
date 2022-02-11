@@ -23,7 +23,7 @@ class ClassifierTest {
     void setUp() {
         val rules = new ArrayList<Rule>();
         rules.add(new Rule("financial", Arrays.asList("credit card","bank account")));
-        rules.add(new Rule("healthcare", Collections.singletonList("medical insurance")));
+        rules.add(new Rule("healthcare", Collections.singletonList("Medical insurance")));
         rules.add(new Rule("hightech", Collections.singletonList("account executive")));
         classifier = new Classifier(new ClassificationRules(rules));
     }

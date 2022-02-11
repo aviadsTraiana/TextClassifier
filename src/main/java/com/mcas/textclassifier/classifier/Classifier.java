@@ -26,20 +26,21 @@ public class Classifier {
             val tag = r.getDomain();
             r.getIndicators()
                     .stream()
+                    .map(String::toLowerCase)
                     .map(s -> s.split("\\s+"))
                     .forEach(words -> trie.addWords(words,tag));
         }
     }
 
     /**
-     * Given a stream of tokens, will classify them into set of tags.
+     * Given a stream of tokens (assuming all lower-cased), will classify them into set of tags.
      * @param tokens stream of tokens
      * @return set of tags which were classified to all the tokens
      */
     public Set<Tag> classifyTokens(Stream<Token> tokens){
         //window represent the tokens we read along the trie, as we walk the trie
         val window = new LinkedList<String>();
-        HashSet<Tag> result = new HashSet<>();
+        val result = new HashSet<Tag>();
         tokens.map(Token::getValue)
                 .forEach(token -> {
                     val node = trie.readNext(token);
