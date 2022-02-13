@@ -14,15 +14,23 @@ public class CommandLineView {
         options.addOption(new Option("s", SCAN_OPTION_KEY,true,"Path in the filesystem representing a file or a folder that should be scanned"));
         options.addOption(new Option("h", HELP_OPTION_KEY,false,"helps how to work with the tool"));
         CommandLineParser parser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("ant", options);
+       
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
+            showHelp();
             throw new IllegalArgumentException(e);
+        }
+        if(cmd.hasOption(HELP_OPTION_KEY)){
+            showHelp();
         }
         checkForMissingOption(CONFIG_OPTION_KEY);
         checkForMissingOption(SCAN_OPTION_KEY);
+    }
+
+    private void showHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("ant", options);
     }
 
     public String getConfigPath(){

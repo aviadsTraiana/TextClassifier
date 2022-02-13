@@ -45,6 +45,7 @@ public class TextClassifierFilesReader implements Runnable {
     public void run() {
         @Cleanup val files = Files.walk(this.scanPath)
                 .filter(Files::isRegularFile)
+                .unordered()
                 .parallel();
         files.forEach(filePath -> {
             try {
