@@ -3,7 +3,7 @@
   
 # Text Classifeir  
   
-an implementation for the text classifier task which was given [here](https://github.com/Mcas-Interviews/TextClassifier_AviadShiber/issues/1)  
+an implementation for the text classifier task which was given [here](/docs/Home-Assignment.pdf)  
   
 ### **Build**  
 to build the project run the following command from root project :  
