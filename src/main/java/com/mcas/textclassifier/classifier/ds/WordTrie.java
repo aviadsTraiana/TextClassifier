@@ -38,7 +38,7 @@ public class WordTrie {
     public WordTrie() {
         this.root = new Node(null);
         //this.current = root;
-        currentNode=new ThreadLocal<>();
+        currentNode = new ThreadLocal<>();
         currentNode.set(root);
         this.tags = new Hashtable<>();
     }

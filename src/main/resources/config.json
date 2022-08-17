@@ -6,6 +6,8 @@
     {"domain": "25", "indicators": ["2 5"]},
     {"domain": "1256", "indicators": ["1 2 5 6"]},
     {"domain": "34", "indicators": ["3 4"]},
-    {"domain": "12", "indicators": ["1 2"]}
+    {"domain": "12", "indicators": ["1 2"]},
+    {"domain": "none-sense", "indicators": ["odio aenean"]},
+    {"domain": "weather", "indicators": ["sun strikes"]}
   ]
 }
